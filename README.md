@@ -100,14 +100,24 @@ The plugin builds `stat/<topic>/serial` and `cmnd/<topic>/...` internally. If yo
 
 ## Setup
 
-During setup the integration will auto-configure the Tasmota rules on your boiler via MQTT:
+Once the boiler is already on your local MQTT broker (see the Prerequisite section above), the integration handles everything else. During setup it sends the following commands to the Tasmota module via MQTT and enables them:
 
-- `SerialDelimiter 82` (needed for INFO frame parsing)
-- `SerialLog 0` (prevents debug output polluting the MCU)
+- `SerialDelimiter 82` — needed so the INFO frame arrives intact
+- `SerialLog 0` — prevents Tasmota debug output from polluting the MCU serial line
+- `SetOption65 1` — disables Tasmota's fast-power-cycle detection on serial
 - `Rule1` — forwards serial data to `stat/<topic>/serial`
-- `Rule2` + `RuleTimer1 30` — polls the MCU for INFO every 30 seconds
+- `Rule2` + `RuleTimer1 30` — polls the MCU for a fresh INFO frame every 30 seconds
 
-No manual Tasmota console work needed.
+**What you still have to do manually** (once, before installing the plugin):
+
+- Reconfigure the Tasmota module to point at your local MQTT broker via its web UI — see the Prerequisite section.
+- Look up your Tasmota topic in the same web UI so you can enter it in the plugin's config flow.
+
+**What the plugin does NOT do:**
+
+- It does not change your Wi-Fi or MQTT broker settings — those must already be correct.
+- It does not validate that the MCU accepts a command. Writes are fire-and-forget; if the MCU returns `ER` (bad checksum/value) you'll see the state revert on the next INFO poll but no error is surfaced in HA.
+- It does not reset your boiler to factory settings or unpair the Teknix cloud app — that has to happen on your side first.
 
 ## Services
 
