@@ -1,0 +1,108 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Котел Teknix ESPRO",
+        "description": "**Важливо:** топік Tasmota має ТОЧНО відповідати топіку, налаштованому на Wi-Fi модулі котла. Щоб його знайти, відкрийте веб-інтерфейс Tasmota котла (наприклад, http://<ip-котла>/) і перегляньте **Configuration → Configure MQTT → Topic**. Не додавайте префікси `stat/` чи `cmnd/` — лише сам топік (наприклад, `boiler_kotel`). Котел має бути вже під'єднаний до того ж MQTT брокера, що й Home Assistant.",
+        "data": {
+          "tasmota_topic": "Tasmota топік (має відповідати Configuration → Configure MQTT → Topic на котлі)"
+        }
+      }
+    },
+    "error": {
+      "invalid_topic": "Топік не може бути порожнім.",
+      "mqtt_not_available": "Інтеграція MQTT недоступна. Спочатку налаштуйте її."
+    },
+    "abort": {
+      "already_configured": "Цей топік котла вже налаштований."
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "legionella_active": { "name": "Цикл легіонелли активний" },
+      "priority_consumer_input": { "name": "Вхід пріоритетного споживача" },
+      "room_thermostat_input": { "name": "Вхід кімнатного термостата" },
+      "programmer_heat_active": { "name": "Програматор нагріву активний" },
+      "programmer_room_active": { "name": "Програматор кімнати активний" },
+      "programmer_gvs_active": { "name": "Програматор ГВП активний" }
+    },
+    "climate": {
+      "boiler": { "name": "Котел" }
+    },
+    "number": {
+      "heating_setpoint": { "name": "Уставка нагріву" },
+      "room_setpoint": { "name": "Уставка кімнати" },
+      "power_level": { "name": "Потужність" },
+      "hysteresis": { "name": "Гістерезис" },
+      "p7_max_heating_temp": { "name": "P7 макс. температура нагріву" },
+      "dhw_tank_setpoint": { "name": "Уставка бака ГВП" },
+      "dhw_out_setpoint": { "name": "Уставка нагріву в режимі ГВП" },
+      "p5_max_power_gvs": { "name": "P5 макс. потужність ГВП" },
+      "p8_max_dhw_tank": { "name": "P8 макс. температура бака ГВП" },
+      "p9_max_boiler_gvs": { "name": "P9 макс. температура котла в ГВП" }
+    },
+    "select": {
+      "heating_mode": {
+        "name": "Режим нагріву",
+        "state": {
+          "by_coolant": "По теплоносію",
+          "by_air": "По повітрю"
+        }
+      }
+    },
+    "sensor": {
+      "air_temp": { "name": "Температура повітря" },
+      "coolant_temp": { "name": "Температура теплоносія" },
+      "current_power": { "name": "Поточна потужність" },
+      "error_code": {
+        "name": "Код помилки",
+        "state": {
+          "ok": "ОК",
+          "e1_current_leak": "E1 — витік струму",
+          "e2_water_flow": "E2 — проблема протоку води",
+          "e3_coolant_sensor": "E3 — несправність датчика теплоносія",
+          "e4_air_sensor": "E4 — несправність датчика повітря",
+          "e5_dhw_sensor": "E5 — несправність датчика бака ГВП",
+          "e6_overheat": "E6 — перегрів",
+          "e7_no_connection": "E7 — немає зв'язку"
+        }
+      },
+      "dhw_tank_temp": { "name": "Температура бака ГВП" },
+      "issue_date": { "name": "Дата виробництва" },
+      "p6_consumer_priority": { "name": "P6 ліміт пріоритетного споживача" },
+      "legionella_mode": { "name": "Режим легіонелли" },
+      "step_last_heating": { "name": "Крок останньої зміни нагріву" },
+      "step_last_gvs": { "name": "Крок останньої зміни ГВП" }
+    },
+    "switch": {
+      "heating": { "name": "Опалення" },
+      "dhw": { "name": "ГВП" }
+    }
+  },
+  "services": {
+    "set_field": {
+      "name": "Встановити поле INFO",
+      "description": "Записати ціле число у вказане поле INFO за ім'ям.",
+      "fields": {
+        "field": {
+          "name": "Назва поля",
+          "description": "Ім'я поля INFO (наприклад, TEMPER_BOILER_OUT, HEATING_MODE)."
+        },
+        "value": {
+          "name": "Значення",
+          "description": "Ціле число (0-99)."
+        }
+      }
+    },
+    "send_raw": {
+      "name": "Надіслати raw команду",
+      "description": "Надіслати готову команду безпосередньо MCU котла (для налагодження).",
+      "fields": {
+        "command": {
+          "name": "Команда",
+          "description": "Повний рядок команди (наприклад, T02600008Z або INFO)."
+        }
+      }
+    }
+  }
+}

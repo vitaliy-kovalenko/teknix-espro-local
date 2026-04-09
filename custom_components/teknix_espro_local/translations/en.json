@@ -1,0 +1,108 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Teknix ESPRO Boiler",
+        "description": "**Important:** the Tasmota topic must EXACTLY match the topic configured on your boiler's Wi-Fi module. To find it, open the Tasmota web UI of the boiler (e.g. http://<boiler-ip>/) and look at **Configuration → Configure MQTT → Topic**. Do not include `stat/` or `cmnd/` prefixes — just the plain topic name (e.g. `boiler_kotel`). The boiler must already be connected to the same MQTT broker as Home Assistant.",
+        "data": {
+          "tasmota_topic": "Tasmota topic (must match Configuration → Configure MQTT → Topic on the boiler)"
+        }
+      }
+    },
+    "error": {
+      "invalid_topic": "Topic cannot be empty.",
+      "mqtt_not_available": "The MQTT integration is not available. Please set it up first."
+    },
+    "abort": {
+      "already_configured": "This boiler topic is already configured."
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "legionella_active": { "name": "Legionella cycle active" },
+      "priority_consumer_input": { "name": "Priority consumer input" },
+      "room_thermostat_input": { "name": "Room thermostat input" },
+      "programmer_heat_active": { "name": "Heating programmer active" },
+      "programmer_room_active": { "name": "Room programmer active" },
+      "programmer_gvs_active": { "name": "DHW programmer active" }
+    },
+    "climate": {
+      "boiler": { "name": "Boiler" }
+    },
+    "number": {
+      "heating_setpoint": { "name": "Heating setpoint" },
+      "room_setpoint": { "name": "Room setpoint" },
+      "power_level": { "name": "Power" },
+      "hysteresis": { "name": "Hysteresis" },
+      "p7_max_heating_temp": { "name": "P7 max heating temperature" },
+      "dhw_tank_setpoint": { "name": "DHW tank setpoint" },
+      "dhw_out_setpoint": { "name": "DHW outlet setpoint" },
+      "p5_max_power_gvs": { "name": "P5 max DHW power" },
+      "p8_max_dhw_tank": { "name": "P8 max DHW tank temperature" },
+      "p9_max_boiler_gvs": { "name": "P9 max boiler temperature in DHW" }
+    },
+    "select": {
+      "heating_mode": {
+        "name": "Heating mode",
+        "state": {
+          "by_coolant": "By coolant temperature",
+          "by_air": "By air temperature"
+        }
+      }
+    },
+    "sensor": {
+      "air_temp": { "name": "Air temperature" },
+      "coolant_temp": { "name": "Coolant temperature" },
+      "current_power": { "name": "Current power" },
+      "error_code": {
+        "name": "Error code",
+        "state": {
+          "ok": "OK",
+          "e1_current_leak": "E1 — current leak",
+          "e2_water_flow": "E2 — water flow fault",
+          "e3_coolant_sensor": "E3 — coolant sensor fault",
+          "e4_air_sensor": "E4 — air sensor fault",
+          "e5_dhw_sensor": "E5 — DHW sensor fault",
+          "e6_overheat": "E6 — overheat",
+          "e7_no_connection": "E7 — no connection"
+        }
+      },
+      "dhw_tank_temp": { "name": "DHW tank temperature" },
+      "issue_date": { "name": "Manufacturing date" },
+      "p6_consumer_priority": { "name": "P6 priority consumer limit" },
+      "legionella_mode": { "name": "Legionella mode" },
+      "step_last_heating": { "name": "Last heating step" },
+      "step_last_gvs": { "name": "Last DHW step" }
+    },
+    "switch": {
+      "heating": { "name": "Heating" },
+      "dhw": { "name": "DHW" }
+    }
+  },
+  "services": {
+    "set_field": {
+      "name": "Set INFO field",
+      "description": "Write a raw integer value to a specific INFO field by name.",
+      "fields": {
+        "field": {
+          "name": "Field name",
+          "description": "The INFO field name (e.g. TEMPER_BOILER_OUT, HEATING_MODE)."
+        },
+        "value": {
+          "name": "Value",
+          "description": "Integer value (0-99)."
+        }
+      }
+    },
+    "send_raw": {
+      "name": "Send raw serial command",
+      "description": "Send a pre-built serial command to the boiler MCU (advanced / debugging).",
+      "fields": {
+        "command": {
+          "name": "Command",
+          "description": "Full command string (e.g. T02600008Z or INFO)."
+        }
+      }
+    }
+  }
+}
