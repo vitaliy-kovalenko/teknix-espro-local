@@ -3,7 +3,7 @@
     "step": {
       "user": {
         "title": "Котел Teknix ESPRO",
-        "description": "**Важливо:** топік Tasmota має ТОЧНО відповідати топіку, налаштованому на Wi-Fi модулі котла. Щоб його знайти, відкрийте веб-інтерфейс Tasmota котла (наприклад, http://<ip-котла>/) і перегляньте **Configuration → Configure MQTT → Topic**. Не додавайте префікси `stat/` чи `cmnd/` — лише сам топік (наприклад, `boiler_kotel`). Котел має бути вже під'єднаний до того ж MQTT брокера, що й Home Assistant.",
+        "description": "Важливо: топік Tasmota має ТОЧНО відповідати топіку, налаштованому на Wi-Fi модулі котла. Щоб його знайти, відкрийте веб-інтерфейс Tasmota котла (наприклад, http://IP_КОТЛА/) і перегляньте Configuration → Configure MQTT → Topic. Не додавайте префікси stat/ чи cmnd/ — лише сам топік (наприклад, boiler_kotel). Котел має бути вже під'єднаний до того ж MQTT брокера, що й Home Assistant.",
         "data": {
           "tasmota_topic": "Tasmota топік (має відповідати Configuration → Configure MQTT → Topic на котлі)"
         }

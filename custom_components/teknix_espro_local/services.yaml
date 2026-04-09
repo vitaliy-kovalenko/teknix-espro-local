@@ -1,10 +1,14 @@
 set_field:
   name: Set INFO field
   description: Write a raw integer value to a specific INFO field by name.
-  target:
-    device:
-      integration: teknix_espro_local
   fields:
+    device_id:
+      name: Boiler device
+      description: The Teknix boiler device to target.
+      required: true
+      selector:
+        device:
+          integration: teknix_espro_local
     field:
       name: Field name
       description: The INFO field name (e.g. TEMPER_BOILER_OUT, HEATING_MODE).
@@ -26,10 +30,14 @@ set_field:
 send_raw:
   name: Send raw serial command
   description: Send a pre-built serial command to the boiler MCU (advanced / debugging).
-  target:
-    device:
-      integration: teknix_espro_local
   fields:
+    device_id:
+      name: Boiler device
+      description: The Teknix boiler device to target.
+      required: true
+      selector:
+        device:
+          integration: teknix_espro_local
     command:
       name: Command
       description: Full command string (e.g. T02600008Z or INFO).

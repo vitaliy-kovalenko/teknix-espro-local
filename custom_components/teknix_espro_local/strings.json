@@ -3,7 +3,7 @@
     "step": {
       "user": {
         "title": "Teknix ESPRO Boiler",
-        "description": "**Important:** the Tasmota topic must EXACTLY match the topic configured on your boiler's Wi-Fi module. To find it, open the Tasmota web UI of the boiler (e.g. http://<boiler-ip>/) and look at **Configuration → Configure MQTT → Topic**. Do not include `stat/` or `cmnd/` prefixes — just the plain topic name (e.g. `boiler_kotel`). The boiler must already be connected to the same MQTT broker as Home Assistant.",
+        "description": "Important: the Tasmota topic must EXACTLY match the topic configured on your boiler's Wi-Fi module. To find it, open the Tasmota web UI of the boiler (e.g. http://YOUR_BOILER_IP/) and look at Configuration → Configure MQTT → Topic. Do not include stat/ or cmnd/ prefixes — just the plain topic name (e.g. boiler_kotel). The boiler must already be connected to the same MQTT broker as Home Assistant.",
         "data": {
           "tasmota_topic": "Tasmota topic (must match Configuration → Configure MQTT → Topic on the boiler)"
         }
