@@ -84,19 +84,15 @@ SENSORS: tuple[TeknixSensorDescription, ...] = (
         ),
     ),
     TeknixSensorDescription(
-        key="current_power",
-        device_class=SensorDeviceClass.POWER,
-        state_class=SensorStateClass.MEASUREMENT,
+        key="rated_power",
+        entity_category=EntityCategory.DIAGNOSTIC,
         native_unit_of_measurement=UnitOfPower.KILO_WATT,
-        value_fn=lambda s: round(s["POWER"] * 2 + s["POWER_FRACT"] / 10, 1),
+        value_fn=lambda s: round((s["POWER"] * 100 + s["POWER_FRACT"]) / 10, 1),
         teknix_description=(
-            "Current power draw reported by the boiler MCU. Derived from "
-            "POWER (whole part) and POWER_FRACT (fractional part)."
-        ),
-        teknix_warning=(
-            "Formula (POWER × 2 + POWER_FRACT / 10) is based on field names "
-            "from the Teknix API Param enum and has NOT been verified against "
-            "a real kWh meter. Treat the value as approximate."
+            "Boiler rated (nameplate) power programmed at the factory. "
+            "Derived from INFO fields POWER and POWER_FRACT which sit in "
+            "the static manufacturing data block (between BRAND and "
+            "STEND_NUMBER). For ESPRO-12: POWER=1, POWER_FRACT=20 → 12.0 kW."
         ),
     ),
     TeknixSensorDescription(

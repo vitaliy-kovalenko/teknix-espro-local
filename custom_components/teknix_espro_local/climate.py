@@ -41,7 +41,7 @@ _CLIMATE_DESCRIPTION = (
     "HVAC mode (OFF/HEAT) is bound to HEATING_MODE (field 10), target "
     "temperature to the room setpoint TEMPER_ROOM_WHOLE (field 1), current "
     "temperature to SENSOR_ROOM (field 39), and HVAC action is inferred "
-    "from the current power draw (POWER field > 0 = HEATING, else IDLE)."
+    "from coolant-vs-room temperature delta (coolant > room + 3°C = HEATING)."
 )
 
 _CLIMATE_WARNING = (
@@ -108,8 +108,13 @@ class TeknixClimate(TeknixBoilerEntity, ClimateEntity):
         try:
             if state["HEATING_MODE"] != 1:
                 return HVACAction.OFF
-            # Use current power draw (field 29 = 0 means idle)
-            return HVACAction.HEATING if state["POWER"] > 0 else HVACAction.IDLE
+            # POWER field is static factory data (rated power), not live draw.
+            # Infer heating from coolant-vs-room delta: when actively heating
+            # the coolant is much warmer than the room; when idle it cools
+            # down to near room temp.  Both sensors are in 0.1°C units.
+            coolant = state["SENSOR_BOILER_OUT"]
+            room = state["SENSOR_ROOM"]
+            return HVACAction.HEATING if coolant > room + 30 else HVACAction.IDLE
         except (KeyError, IndexError):
             return None
 

@@ -53,7 +53,7 @@
     "sensor": {
       "air_temp": { "name": "Air temperature" },
       "coolant_temp": { "name": "Coolant temperature" },
-      "current_power": { "name": "Current power" },
+      "rated_power": { "name": "Rated power" },
       "error_code": {
         "name": "Error code",
         "state": {

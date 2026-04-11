@@ -53,7 +53,7 @@
     "sensor": {
       "air_temp": { "name": "Температура повітря" },
       "coolant_temp": { "name": "Температура теплоносія" },
-      "current_power": { "name": "Поточна потужність" },
+      "rated_power": { "name": "Номінальна потужність" },
       "error_code": {
         "name": "Код помилки",
         "state": {
